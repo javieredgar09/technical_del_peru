@@ -1,0 +1,35 @@
+{
+  "name": "technical_del_peru",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "pnpm exec postcss ./public/assets/css/input.css -o ./public/assets/css/styles.css",
+    "watch:css": "pnpm exec postcss ./public/assets/css/input.css -o ./public/assets/css/styles.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.3.0",
+      "onFail": "download"
+    }
+  },
+  "type": "module",
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.0",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.15",
+    "postcss-cli": "^11.0.1",
+    "tailwindcss": "^4.3.0"
+  },
+  "dependencies": {
+    "aos": "^2.3.4",
+    "gsap": "^3.15.0",
+    "swiper": "^12.1.4",
+    "three": "^0.184.0"
+  }
+}

@@ -1,0 +1,32 @@
+# Dependencies
+vendor/
+node_modules/
+pnpm-lock.yaml
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads and sensitive data
+public/assets/uploads/
+public/assets/css/
+scratch/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
