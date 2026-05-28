@@ -19,8 +19,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install required PHP extensions
-RUN docker-php-ext-configure zip --with-libzip && \
-    docker-php-ext-install pdo pdo_mysql mysqli zip && \
+RUN docker-php-ext-configure zip && \
+    docker-php-ext-install -j$(nproc) pdo pdo_mysql mysqli zip && \
     docker-php-ext-enable pdo pdo_mysql mysqli zip
 
 # Enable Apache rewrite module
