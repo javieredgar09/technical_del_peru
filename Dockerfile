@@ -18,6 +18,10 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
+# Disable conflicting MPM modules and enable only mpm_prefork
+RUN a2dismod mpm_event mpm_worker mpm_itk 2>/dev/null || true && \
+    a2enmod mpm_prefork
+
 # Install required PHP extensions
 RUN docker-php-ext-install -j$(nproc) pdo pdo_mysql mysqli zip && \
     docker-php-ext-enable pdo pdo_mysql mysqli zip
