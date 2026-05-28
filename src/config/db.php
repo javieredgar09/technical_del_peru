@@ -21,10 +21,11 @@ if (file_exists(dirname(__DIR__, 2) . '/vendor/autoload.php')) {
 // ================================================================
 
 // Base de datos
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'technical_db');
-define('DB_USER', 'root');
-define('DB_PASS', '');        // XAMPP default — CAMBIAR EN PRODUCCIÓN
+// Lee variables de entorno para Railway.app, fallback a localhost para desarrollo
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_NAME', getenv('DB_NAME') ?: 'technical_db');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: '');        // XAMPP default — CAMBIAR EN PRODUCCIÓN
 define('DB_CHARSET', 'utf8mb4');
 
 // Rutas del proyecto
@@ -33,9 +34,21 @@ define('SRC_PATH', ROOT_PATH . '/src');
 define('PUBLIC_PATH', ROOT_PATH . '/public');
 define('UPLOADS_PATH', PUBLIC_PATH . '/assets/uploads');
 
-// URL base (ajustar según entorno)
-define('BASE_URL', 'http://localhost/technical_del_peru/public');
-define('ADMIN_URL', 'http://localhost/technical_del_peru/admin');
+// URL base dinámica (detecta automáticamente desarrollo local y producción Hostinger)
+$scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+if (strpos($scriptName, '/public') !== false) {
+    $pos = strpos($scriptName, '/public');
+    $basePath = substr($scriptName, 0, $pos + 7);
+} else {
+    $basePath = '';
+}
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+// Forzar HTTPS en producción para evitar bloqueos por Contenido Mixto (Mixed Content) en Hostinger
+$isLocal = ($host === 'localhost' || $host === '127.0.0.1' || strpos($host, '192.168.') === 0 || strpos($host, '10.') === 0 || strpos($host, '172.') === 0);
+$protocol = $isLocal ? 'http' : 'https';
+
+define('BASE_URL', $protocol . '://' . $host . $basePath);
+define('ADMIN_URL', BASE_URL . '/admin');
 
 // Configuración de archivos
 define('MAX_FILE_SIZE', 10 * 1024 * 1024); // 10 MB
