@@ -53,7 +53,13 @@ RUN chown -R www-data:www-data /var/www/html && \
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
 # Add Apache configuration for the public directory
-RUN echo '<Directory /var/www/html/public>\\n    Options Indexes FollowSymLinks\\n    AllowOverride All\\n    Require all granted\\n</Directory>' >> /etc/apache2/apache2.conf
+RUN cat <<'EOF' >> /etc/apache2/apache2.conf
+<Directory /var/www/html/public>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>
+EOF
 
 # Expose port 8080 for Railway
 EXPOSE 8080
