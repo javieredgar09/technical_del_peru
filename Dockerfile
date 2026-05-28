@@ -35,6 +35,14 @@ RUN mkdir -p /var/www/html/public/assets/uploads && \
     mkdir -p /var/www/html/public/assets/uploads/firmas && \
     mkdir -p /var/www/html/public/assets/uploads/modelos_3d
 
+# Install system dependencies required by Composer
+RUN apt-get update && apt-get install -y \
+    unzip \
+    git \
+    libzip-dev \
+    && docker-php-ext-install zip \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
